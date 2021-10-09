@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+</body>
+</html>
+<script src="../lib/pixi.min.js"></script>
+<script type="text/javascript">
+    const Application = PIXI.Application
+        Container = PIXI.Container,
+        loader = PIXI.Loader.shared,
+        resources = PIXI.Loader.shared.resources,
+        Sprite = PIXI.Sprite
+
+    const app = new Application({
+        width: 512,
+        height: 512,
+        antialias: true,    // default: false 反锯齿
+        transparent: false, // default: false 透明度
+        resolution: 1       // default: 1 分辨率
+    })
+
+    document.body.appendChild(app.view)
+
+    loader
+        .add('./images/treasureHunter.json')
+        .load(setup)
+
+    let state, gameScene, gameOverScene, frameId,
+        dungeon, door, explorer, treasure, blobs
+
+    function setup() {
+        //Create the `gameScene` group
+        gameScene = new Container()
+        app.stage.addChild(gameScene)
+
+        frameId = resources['./images/treasureHunter.json'].textures
+        console.log(frameId, 'frameId')
+
+        //Create the `dungeon` sprite
+        dungeon = new Sprite(frameId['dungeon.png'])
+        gameScene.addChild(dungeon)
+
+        //Create the `door` sprite
+        door = new Sprite(frameId['door.png'])
+        door.position.set(40, 0)
+        gameScene.addChild(door)
+
+        //Create the `explorer` sprite
+        explorer = new Sprite(frameId['explorer.png'])
+        explorer.position.set(45, 40)
+        explorer.vx = 0
+        explorer.vy = 0
+        gameScene.addChild(explorer)
+
+        //Create the `treasure` sprite
+        treasure = new Sprite(frameId['treasure.png'])
+        treasure.x = gameScene.width - 80
+        treasure.y = (gameScene.height - treasure.height) / 2
+        gameScene.addChild(treasure)
+
+        //Make the blobs
+        let numOfBlobs = 6,
+            spacing = 48,
+            xOffset = 150,
+            speed = 2,
+            direction = 1
+
+        blobs = []
+
+        for (let i = 0; i < numOfBlobs; i++) {
+            const blob = new Sprite(frameId['blob.png'])
+
+            blob.x = spacing * i + xOffset;
+            blob.y = randomInt(0, app.stage.height - blob.height)
+
+            blob.vy = speed * direction;
+            direction *= -1;
+
+            blobs.push(blob)
+            gameScene.addChild(blob)
+        }
+
+        //Create the health bar
+        //Add some text for the game over message
+        //Create a `gameOverScene` group
+        gameOverScene = new Container()
+        app.stage.addChild(gameOverScene)
+        gameOverScene.visible = false
+        //Assign the player's keyboard controllers
+
+        state = play
+        app.ticker.add(delta => gameLoop(delta))
+    }
+
+    function gameLoop(delta) {
+        state(delta)
+    }
+
+    function play() {
+
+    }
+
+    function end() {
+        gameScene.visible = false
+        gameOverScene.visible = true
+    }
+
+    function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+</script>
