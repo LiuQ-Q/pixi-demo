@@ -1,0 +1,33 @@
+{
+  "name": "pixi-demo",
+  "version": "1.0.0",
+  "description": "pixi-demo",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "dev-rollup": "rollup --config script/rollup.config.dev.js --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LiuQ-Q/pixi-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LiuQ-Q/pixi-demo/issues"
+  },
+  "homepage": "https://github.com/LiuQ-Q/pixi-demo#readme",
+  "dependencies": {
+    "pixi.js": "^6.2.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-html": "^0.2.4",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "rollup": "^2.60.1",
+    "rollup-plugin-livereload": "^2.0.5",
+    "rollup-plugin-serve": "^1.1.0"
+  }
+}
