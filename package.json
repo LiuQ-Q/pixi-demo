@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "dev-rollup": "rollup --config script/rollup.config.dev.js --watch"
+    "wall-rollup-dev": "rollup --config script/rollup.config.dev.js --watch"
   },
   "repository": {
     "type": "git",
@@ -24,9 +24,11 @@
     "pixi.js": "^6.2.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-html": "^0.2.4",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "rollup": "^2.60.1",
+    "rollup-plugin-img": "^1.1.0",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-serve": "^1.1.0"
   }
